@@ -32,8 +32,8 @@ var indent = "..."
 var helpText = `
 A command line application designed to provide a simple method to execute a
 BigQuery SQL script from "stdin", outputting all results to "stdout" in CSV
-format.  A detailed log is output to the console providing you with the
-available execution statistics.
+format.  A detailed log is output to the console "stderr" providing you with
+the available execution statistics.
 
 Use --help for more details.
 
