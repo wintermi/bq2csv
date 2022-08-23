@@ -18,7 +18,7 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"time"
 
@@ -48,7 +48,7 @@ func (sql *Query) ReadStdIn() error {
 	}
 
 	// Read data from STDIN
-	buf, err := ioutil.ReadAll(os.Stdin)
+	buf, err := io.ReadAll(os.Stdin)
 	if err != nil {
 		return fmt.Errorf("[ReadStdIn] Read All Failed: %w", err)
 	}
@@ -64,7 +64,7 @@ func (sql *Query) ReadStdIn() error {
 //---------------------------------------------------------------------------------------
 
 // Execute the SQL in BigQuery
-func (sql *Query) ExecuteQueries(project string, dataset string, location string, cache bool, dryRun bool) error {
+func (sql *Query) ExecuteQueries(project string, dataset string, location string, cache bool, dryRun bool, delimiter string) error {
 
 	// Establish a BigQuery Client Connection
 	logger.Info().Msg("Establishing a BigQuery Client Connection")
@@ -83,7 +83,7 @@ func (sql *Query) ExecuteQueries(project string, dataset string, location string
 		sql.ExecuteDryRun(ctx, client, project, dataset, cache)
 		sql.LogExecuteDryRun()
 	} else {
-		sql.ExecuteQuery(ctx, client, project, dataset, cache)
+		sql.ExecuteQuery(ctx, client, project, dataset, cache, delimiter)
 		sql.LogExecuteQuery()
 	}
 
@@ -98,7 +98,7 @@ func (sql *Query) ExecuteQueries(project string, dataset string, location string
 //---------------------------------------------------------------------------------------
 
 // Execute Query
-func (sql *Query) ExecuteQuery(ctx context.Context, client *bigquery.Client, project string, dataset string, cache bool) {
+func (sql *Query) ExecuteQuery(ctx context.Context, client *bigquery.Client, project string, dataset string, cache bool, delimiter string) {
 	// Create and Configure Query
 	q := client.Query(sql.SQL)
 	q.DefaultProjectID = project
@@ -117,6 +117,7 @@ func (sql *Query) ExecuteQuery(ctx context.Context, client *bigquery.Client, pro
 
 	// Ready the CSV Writer
 	w := csv.NewWriter(os.Stdout)
+	w.Comma = rune(delimiter[0])
 	defer w.Flush()
 
 	var row []bigquery.Value

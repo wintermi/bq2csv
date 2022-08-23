@@ -65,7 +65,7 @@ func main() {
 	flag.Parse()
 
 	// Validate the Required Flags
-	if *targetProject == "" || *targetDataset == "" {
+	if *targetProject == "" || *targetDataset == "" || *fieldDelimiter == "" {
 		flag.Usage()
 		os.Exit(1)
 	}
@@ -109,7 +109,7 @@ func main() {
 	logger.Info().Int("SQL Length", len(query.SQL)).Msg("Reading SQL Complete")
 
 	// Execute the SQL outputting results to the StdOut
-	err = query.ExecuteQueries(*targetProject, *targetDataset, *processingLocation, *useQueryCache, *dryRun)
+	err = query.ExecuteQueries(*targetProject, *targetDataset, *processingLocation, *useQueryCache, *dryRun, *fieldDelimiter)
 	if err != nil {
 		logger.Error().Err(err).Msg("SQL Execution Failed")
 		os.Exit(1)
