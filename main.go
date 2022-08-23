@@ -65,7 +65,13 @@ func main() {
 	flag.Parse()
 
 	// Validate the Required Flags
-	if *targetProject == "" || *targetDataset == "" || *fieldDelimiter == "" {
+	if *targetProject == "" || *targetDataset == "" {
+		flag.Usage()
+		os.Exit(1)
+	}
+
+	// Validate that the Field Delimiter is 1 character
+	if len(*fieldDelimiter) != 1 {
 		flag.Usage()
 		os.Exit(1)
 	}
