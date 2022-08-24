@@ -15,6 +15,7 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"encoding/csv"
 	"fmt"
@@ -115,15 +116,15 @@ func (sql *Query) ExecuteQuery(ctx context.Context, client *bigquery.Client, pro
 		return
 	}
 
-	// Ready the CSV Writer
-	w := csv.NewWriter(os.Stdout)
+	// Ready the CSV Writer and use a buffered io writer for STDOUT
+	w := csv.NewWriter(bufio.NewWriter(os.Stdout))
 	w.Comma = rune(delimiter[0])
 	defer w.Flush()
 
-	var row []bigquery.Value
+	var rl RowLoader
 	var rowCount int64
 	for {
-		err := it.Next(&row)
+		err := it.Next(&rl)
 		if rowCount == 0 {
 			sql.FirstRowReturnedTime = time.Now()
 		}
@@ -136,7 +137,7 @@ func (sql *Query) ExecuteQuery(ctx context.Context, client *bigquery.Client, pro
 			sql.Error = err
 			return
 		}
-		if err := w.Write(*bqToString(&row)); err != nil {
+		if err := w.Write(rl.Row); err != nil {
 			sql.Error = fmt.Errorf("Failed Writing to the Output File")
 			return
 		}
@@ -208,16 +209,4 @@ func (sql *Query) LogExecuteDryRun() {
 	logger.Info().Time("Query Execution Start", sql.QueryStartTime).Msg(indent)
 	logger.Info().Time("Query Execution End", sql.QueryEndTime).Msg(indent)
 	logger.Info().TimeDiff("Execution Time (ms)", sql.QueryEndTime, sql.QueryStartTime).Msg(indent)
-}
-
-//---------------------------------------------------------------------------------------
-
-// Convert BigQuery.Value Array to a String Array
-func bqToString(row *[]bigquery.Value) *[]string {
-	record := make([]string, len(*row))
-
-	for i, val := range *row {
-		record[i] = fmt.Sprint(val)
-	}
-	return &record
 }

@@ -39,7 +39,7 @@ Use --help for more details.
 
 
 USAGE:
-    bq2csv -p PROJECT_ID -d DATASET -f DELIMITER
+    bq2csv -p PROJECT_ID -d DATASET
 
 ARGS:
 `
