@@ -42,17 +42,17 @@ func (r *RowLoader) Load(row []bigquery.Value, schema bigquery.Schema) error {
 	r.Schema = schema
 
 	for i, val := range row {
-		switch val.(type) {
+		switch val := val.(type) {
 		case string:
-			r.Row[i] = val.(string)
+			r.Row[i] = val
 		case int64:
-			r.Row[i] = strconv.FormatInt(val.(int64), 10)
+			r.Row[i] = strconv.FormatInt(val, 10)
 		case *big.Rat:
 			switch schema[i].Type {
 			case bigquery.NumericFieldType:
-				r.Row[i] = strings.TrimRight(strings.TrimRight(bigquery.NumericString(val.(*big.Rat)), "0"), ".")
+				r.Row[i] = strings.TrimRight(strings.TrimRight(bigquery.NumericString(val), "0"), ".")
 			case bigquery.BigNumericFieldType:
-				r.Row[i] = strings.TrimRight(strings.TrimRight(bigquery.BigNumericString(val.(*big.Rat)), "0"), ".")
+				r.Row[i] = strings.TrimRight(strings.TrimRight(bigquery.BigNumericString(val), "0"), ".")
 			default:
 				r.Row[i] = fmt.Sprint(val)
 			}
