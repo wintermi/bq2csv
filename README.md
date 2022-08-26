@@ -10,7 +10,7 @@ USAGE:
     bq2csv -p PROJECT_ID -d DATASET
 
 ARGS:
-  -c	Use Query Cache
+  -c	Disable Query Cache
   -d string
     	BigQuery Dataset  (Required)
   -dr

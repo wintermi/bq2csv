@@ -42,6 +42,10 @@ func (r *RowLoader) Load(row []bigquery.Value, schema bigquery.Schema) error {
 	r.Schema = schema
 
 	for i, val := range row {
+		if val == nil {
+			continue
+		}
+
 		switch val := val.(type) {
 		case string:
 			r.Row[i] = val
