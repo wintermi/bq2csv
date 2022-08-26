@@ -81,10 +81,10 @@ func (sql *Query) ExecuteQueries(project string, dataset string, location string
 
 	// Execute SQL
 	if dryRun {
-		sql.ExecuteDryRun(ctx, client, project, dataset, disableQueryCache)
+		sql.ExecuteDryRun(ctx, client, project, dataset, location, disableQueryCache)
 		sql.LogExecuteDryRun()
 	} else {
-		sql.ExecuteQuery(ctx, client, project, dataset, disableQueryCache, delimiter)
+		sql.ExecuteQuery(ctx, client, project, dataset, location, disableQueryCache, delimiter)
 		sql.LogExecuteQuery()
 	}
 
@@ -99,11 +99,12 @@ func (sql *Query) ExecuteQueries(project string, dataset string, location string
 //---------------------------------------------------------------------------------------
 
 // Execute Query
-func (sql *Query) ExecuteQuery(ctx context.Context, client *bigquery.Client, project string, dataset string, disableQueryCache bool, delimiter string) {
+func (sql *Query) ExecuteQuery(ctx context.Context, client *bigquery.Client, project string, dataset string, location string, disableQueryCache bool, delimiter string) {
 	// Create and Configure Query
 	q := client.Query(sql.SQL)
 	q.DefaultProjectID = project
 	q.DefaultDatasetID = dataset
+	q.Location = location
 	q.DisableQueryCache = disableQueryCache
 	q.DryRun = false
 
@@ -148,11 +149,12 @@ func (sql *Query) ExecuteQuery(ctx context.Context, client *bigquery.Client, pro
 //---------------------------------------------------------------------------------------
 
 // Execute Dry Run Query
-func (sql *Query) ExecuteDryRun(ctx context.Context, client *bigquery.Client, project string, dataset string, disableQueryCache bool) {
+func (sql *Query) ExecuteDryRun(ctx context.Context, client *bigquery.Client, project string, dataset string, location string, disableQueryCache bool) {
 	// Create and Configure Query
 	q := client.Query(sql.SQL)
 	q.DefaultProjectID = project
 	q.DefaultDatasetID = dataset
+	q.Location = location
 	q.DisableQueryCache = disableQueryCache
 	q.DryRun = true
 
