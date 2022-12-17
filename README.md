@@ -1,5 +1,5 @@
 # BigQuery 2 CSV
-[![Go Workflow Status](https://github.com/winterlabs-dev/bq2csv/workflows/Go/badge.svg)](https://github.com/winterlabs-dev/bq2csv/actions/workflows/go.yml)&nbsp;[![Go Report Card](https://goreportcard.com/badge/github.com/winterlabs-dev/bq2csv)](https://goreportcard.com/report/github.com/winterlabs-dev/bq2csv)&nbsp;[![license](https://img.shields.io/github/license/winterlabs-dev/bq2csv.svg)](https://github.com/winterlabs-dev/bq2csv/blob/main/LICENSE)&nbsp;[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/winterlabs-dev/bq2csv?include_prereleases)](https://github.com/winterlabs-dev/bq2csv/releases)
+[![Go Workflow Status](https://github.com/wintermi/bq2csv/workflows/Go/badge.svg)](https://github.com/wintermi/bq2csv/actions/workflows/go.yml)&nbsp;[![Go Report Card](https://goreportcard.com/badge/github.com/wintermi/bq2csv)](https://goreportcard.com/report/github.com/wintermi/bq2csv)&nbsp;[![license](https://img.shields.io/github/license/wintermi/bq2csv.svg)](https://github.com/wintermi/bq2csv/blob/main/LICENSE)&nbsp;[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/wintermi/bq2csv?include_prereleases)](https://github.com/wintermi/bq2csv/releases)
 
 
 ## Description
