@@ -1,4 +1,4 @@
-// Copyright 2022, Matthew Winter
+// Copyright 2022-2023, Matthew Winter
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import (
 )
 
 var logger zerolog.Logger
-var applicationText = "%s 0.1.0%s"
-var copyrightText = "Copyright 2022, Matthew Winter\n"
+var applicationText = "%s 0.1.1%s"
+var copyrightText = "Copyright 2022-2023, Matthew Winter\n"
 var indent = "..."
 
 var helpText = `
