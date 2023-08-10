@@ -8,41 +8,43 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go-version: [ '1.19.11', '1.20.6' ]
+        go-version:
+          - 1.20.7
+          - 1.21.0
 
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.3
       - name: Setup Go ${{ matrix.go-version }}
-        uses: actions/setup-go@v4.0.0
+        uses: actions/setup-go@v4.0.1
         with:
           go-version: ${{ matrix.go-version }}
 
       - name: Display Go version
         run: go version
 
-      - name: Install dependencies
+      - name: Install Go Dependencies
         run: go get ./...
 
-      - name: Build
+      - name: Execute Go Build
         run: go build -v ./...
 
-      - name: Test
+      - name: Execute Go Test
         run: go test -v ./...
 
   golangci:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.3
       - name: Setup Go
-        uses: actions/setup-go@v4.0.0
+        uses: actions/setup-go@v4.0.1
         with:
-          go-version: 1.19.11
+          go-version: 1.20.7
 
       - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v3.4.0
+        uses: golangci/golangci-lint-action@v3.6.0
         with:
-          version: v1.52.2
+          version: v1.53.3
           skip-pkg-cache: true
           skip-build-cache: true
           args: --timeout=10m
