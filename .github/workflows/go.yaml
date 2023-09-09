@@ -18,8 +18,8 @@ jobs:
     strategy:
       matrix:
         go-version:
-          - 1.20.7
-          - 1.21.0
+          - 1.20.8
+          - 1.21.1
 
     steps:
       - uses: actions/checkout@v3.5.3
@@ -48,7 +48,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4.0.1
         with:
-          go-version: 1.20.7
+          go-version: 1.20.8
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v3.6.0
         with:
