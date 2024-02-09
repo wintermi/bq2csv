@@ -1,6 +1,6 @@
 module github.com/wintermi/bq2csv
 
-go 1.21
+go 1.20
 
 require (
 	cloud.google.com/go/bigquery v1.59.0
