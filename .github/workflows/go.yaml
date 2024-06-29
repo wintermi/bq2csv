@@ -21,7 +21,9 @@ jobs:
           - 1.22.4
 
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
+        with:
+          fetch-depth: 0
       - name: Setup Go ${{ matrix.go-version }}
         uses: actions/setup-go@v5.0.1
         with:
@@ -43,7 +45,9 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
+        with:
+          fetch-depth: 0
       - name: Setup Go
         uses: actions/setup-go@v5.0.1
         with:
