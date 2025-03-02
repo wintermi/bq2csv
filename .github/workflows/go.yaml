@@ -1,4 +1,4 @@
-name: Go - Development Build
+name: Go - Build
 
 on:
   pull_request:
