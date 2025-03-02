@@ -1,6 +1,6 @@
 # BigQuery 2 CSV
 
-[![Workflows](https://github.com/wintermi/bq2csv/workflows/Go/badge.svg)](https://github.com/wintermi/bq2csv/actions)
+[![Workflows](https://github.com/wintermi/bq2csv/workflows/Go%20-%20Development%20Build/badge.svg)](https://github.com/wintermi/bq2csv/actions)
 [![Go Report](https://goreportcard.com/badge/github.com/wintermi/bq2csv)](https://goreportcard.com/report/github.com/wintermi/bq2csv)
 [![License](https://img.shields.io/github/license/wintermi/bq2csv)](https://github.com/wintermi/bq2csv/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/v/release/wintermi/bq2csv?include_prereleases)](https://github.com/wintermi/bq2csv/releases)
