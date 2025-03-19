@@ -3,7 +3,7 @@ module github.com/wintermi/bq2csv
 go 1.24.0
 
 require (
-	cloud.google.com/go/bigquery v1.66.2
+	cloud.google.com/go/bigquery v1.67.0
 	github.com/rs/zerolog v1.33.0
 	google.golang.org/api v0.226.0
 )
