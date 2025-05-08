@@ -1,0 +1,54 @@
+[env]
+BUILD_DIR = "{{ cwd }}/build"
+VERSION = "{{ exec(command='git describe --tags --always --dirty') }}"
+COMMIT_HASH = "{{ exec(command='git rev-parse --short HEAD') }}"
+
+[tools]
+go = "1.24.3"
+"go:github.com/go-critic/go-critic/cmd/gocritic" = "latest"
+"go:github.com/golangci/golangci-lint/cmd/golangci-lint" = "v1.64.8"
+"go:github.com/securego/gosec/v2/cmd/gosec" = "latest"
+
+[tasks."setup"]
+description = "Setup the project"
+run = ["mise install", "go mod download", "go mod tidy"]
+sources = ["go.mod", "mise.toml", "*/**/*.go"]
+outputs = ["go.sum"]
+
+[tasks."clean"]
+description = "Clean the project"
+run = ["rm -rf {{ env.BUILD_DIR }}", "mkdir -p {{ env.BUILD_DIR }}"]
+
+[tasks."critic"]
+description = "Run Go Critic against the project"
+run = ["gocritic check -disable='#style' ./..."]
+sources = ["*/**/*.go"]
+
+[tasks."security"]
+description = "Run Go Sec against the project"
+run = ["gosec ./..."]
+sources = ["*/**/*.go"]
+
+[tasks."lint"]
+description = "Run Go Lint against the project"
+run = ["golangci-lint run ./..."]
+sources = ["*/**/*.go"]
+
+[tasks."tests"]
+description = "Run the tests"
+depends = ["clean", "critic", "security", "lint"]
+run = [
+  "go test -v -timeout 30s -coverprofile='{{ env.BUILD_DIR }}/cover.out' -coverpkg=./... -cover ./...",
+  "go tool cover -func='{{ env.BUILD_DIR }}/cover.out'",
+]
+sources = ["*/**/*.go"]
+outputs = ["{{ env.BUILD_DIR }}/cover.out"]
+
+[tasks."build"]
+description = "Build the binary"
+depends = ["tests"]
+run = [
+  "CGO_ENABLED=0 go build -ldflags='-w -s -X main.version={{ env.VERSION }} -X main.commit={{ env.COMMIT_HASH }}' -o bin/bq2csv ./...",
+]
+sources = ["main.go"]
+outputs = ["bin/bq2csv"]

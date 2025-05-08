@@ -6,52 +6,22 @@ on:
     branches:
       - main
 
-env:
-  GO_VERSION: 1.24.2
-
 concurrency:
   # Cancels pending runs when a PR gets updated.
   group: ${{ github.head_ref || github.run_id }}-${{ github.actor }}
   cancel-in-progress: true
 
 jobs:
-  unit-test:
-    name: Execute Unit Tests
+  mise-test:
+    name: Unit Tests & Linters
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Setup Go ${{ env.GO_VERSION }}
-        uses: actions/setup-go@v5.4.0
+      - uses: jdx/mise-action@v2
         with:
-          go-version: ${{ env.GO_VERSION }}
-
-      - name: Install Go Dependencies
-        run: go get ./...
-
-      - name: Execute Go Build
-        run: go build -v ./...
-
-      - name: Execute Go Test
-        run: go test -v ./...
-
-  lint:
-    name: Execute Linters
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4.2.2
-        with:
-          fetch-depth: 0
-
-      - name: Setup Go ${{ env.GO_VERSION }}
-        uses: actions/setup-go@v5.4.0
-        with:
-          go-version: ${{ env.GO_VERSION }}
-
-      - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v6.5.2
-        with:
-          version: v1.64.8
-          args: --timeout=10m
+          cache_key_prefix: mise-bq2csv
+          experimental: true
+      - run: mise run setup
+      - run: mise run tests

@@ -28,4 +28,5 @@
 # vendor/
 
 # Project Ignores
-bq2csv
+bin/**
+build/**
