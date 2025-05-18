@@ -31,7 +31,7 @@ sources = ["*/**/*.go"]
 
 [tasks."lint"]
 description = "Run Go Lint against the project"
-run = ["golangci-lint run ./..."]
+run = ["golangci-lint run --timeout=10m ./..."]
 sources = ["*/**/*.go"]
 
 [tasks."tests"]
