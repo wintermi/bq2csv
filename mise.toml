@@ -5,9 +5,9 @@ COMMIT_HASH = "{{ exec(command='git rev-parse --short HEAD') }}"
 
 [tools]
 go = "1.24.3"
+"aqua:golangci/golangci-lint" = "1.64.8"
+"aqua:securego/gosec" = "2.22.4"
 "go:github.com/go-critic/go-critic/cmd/gocritic" = "latest"
-"go:github.com/golangci/golangci-lint/cmd/golangci-lint" = "v1.64.8"
-"go:github.com/securego/gosec/v2/cmd/gosec" = "latest"
 
 [tasks."setup"]
 description = "Setup the project"
