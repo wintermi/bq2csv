@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0
       - uses: jdx/mise-action@v2
         with:
-          cache_key_prefix: mise-bq2csv
+          cache: true
           experimental: true
       - run: mise run setup
       - run: mise run tests
