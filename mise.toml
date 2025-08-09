@@ -4,9 +4,9 @@ VERSION = "{{ exec(command='git describe --tags --always --dirty') }}"
 COMMIT_HASH = "{{ exec(command='git rev-parse --short HEAD') }}"
 
 [tools]
-go = "1.24.5"
-"aqua:golangci/golangci-lint" = "1.64.8"
-"aqua:securego/gosec" = "2.22.5"
+go = "1.24.6"
+"aqua:golangci/golangci-lint" = "2.3.1"
+"aqua:securego/gosec" = "2.22.7"
 "go:github.com/go-critic/go-critic/cmd/gocritic" = "latest"
 
 [tasks."setup"]

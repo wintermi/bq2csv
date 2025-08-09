@@ -72,9 +72,9 @@ func (sql *Query) ExecuteQueries(project string, dataset string, location string
 	ctx := context.Background()
 	client, err := bigquery.NewClient(ctx, project)
 	if err != nil {
-		return fmt.Errorf("Failed Establishing a BigQuery Client Connection: %w", err)
+		return fmt.Errorf("failed establishing a BigQuery client connection: %w", err)
 	}
-	defer client.Close()
+	defer func() { _ = client.Close() }()
 
 	// BigQuery Client Configuration
 	client.Location = location
@@ -90,7 +90,7 @@ func (sql *Query) ExecuteQueries(project string, dataset string, location string
 
 	// Raise an Error if query execution failed
 	if sql.Error != nil {
-		return fmt.Errorf("One or More Queries Failed")
+		return fmt.Errorf("one or more queries failed")
 	}
 
 	return nil
@@ -139,7 +139,7 @@ func (sql *Query) ExecuteQuery(ctx context.Context, client *bigquery.Client, pro
 			return
 		}
 		if err := w.Write(rl.Row); err != nil {
-			sql.Error = fmt.Errorf("Failed Writing to the Output File")
+			sql.Error = fmt.Errorf("failed writing to the output file")
 			return
 		}
 		rowCount++
